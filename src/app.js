@@ -20,8 +20,20 @@ const parentStyle = {
 
 const layoutWrapperStyle = {
     backgroundColor: 'red',
-    width: '40vw',
-    height: '80vh'
+    width: '35vw',
+    height: '80vh',
+    borderRadius: '15px',
+    position: 'relative'
+};
+
+const addTaskButtonStyle = {
+    width: '4rem',
+    height: '4rem',
+    borderRadius: '5rem',
+    border: 'none',
+    position: 'absolute',
+    bottom: '10%',
+    right: '10%',
 };
 
 /**
@@ -35,7 +47,7 @@ const applicationTitleProperties = {
  * Handling html elements
  */
 const parent = document.getElementById('app-container');        //parent container
-applyStyles(parent, { ...parentStyle });
+applyStyles(parent, { ...parentStyle, flexDirection: 'column' });
 applyStyles(document.body, { ...parentStyle, ...marginPaddingReset });
 applyStyles(document.documentElement, { ...marginPaddingReset });
 
@@ -43,6 +55,17 @@ let applicationTitle = applyStyles(createHtmlElements('h2', applicationTitleId, 
 parent.appendChild(applicationTitle);
 let layoutWrapper = applyStyles(createHtmlElements('div', 'layoutWrapper'), { ...layoutWrapperStyle });
 parent.appendChild(layoutWrapper);
+
+
+let taskListItems = listTask();
+console.log(taskListItems);
+for (let item of taskListItems) {
+    console.log(item);
+    layoutWrapper.appendChild(item);
+}
+
+let addTaskButton = applyStyles(createHtmlElements('button', 'addTaskButton', { value: '+' }), { ...addTaskButtonStyle });
+layoutWrapper.appendChild(addTaskButton);
 
 function createHtmlElements (elementName, elementId, attributes = {}, properties = {}) {
     let newElement = document.createElement(elementName);
@@ -67,9 +90,33 @@ function applyStyles (styleElement, styles = {}) {
     let styledElement = styleElement;
     if (styleList.length > 0) {
         for (i = 0; i < styleList.length; i++) {
-            console.log(styles, styleList[i], styles[styleList[i]]);
+            // console.log(styles, styleList[i], styles[styleList[i]]);
             styledElement.style[styleList[i]] = styles[styleList[i]];
         }
     }
     return styledElement;
+}
+
+function listTask () {
+    let taskList = [
+        { task: 'Sample Text 1' },
+        { task: 'Sample Text 2' },
+        { task: 'Sample Text 3' }
+    ];
+
+    const taskElementList = taskList.map((item, index) => {
+        const taskWrapperDivStyle = {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+        };
+        let wrapperDiv = applyStyles(createHtmlElements('div', `item-${index}`), { ...taskWrapperDivStyle });
+
+        const textElementStyles = {};
+        let textElement = applyStyles(createHtmlElements('span', `item-${index}-text`, {}, { textContent: item.task }), { ...textElementStyles });
+        wrapperDiv.appendChild(textElement);
+        return wrapperDiv;
+    });
+
+    return taskElementList;
 }
