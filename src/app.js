@@ -28,8 +28,10 @@ const layoutWrapperStyle = {
     // justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
-    paddingTop: '0.5em',
-    overflow: 'scroll'
+    padding: '25px 0',
+    overflow: 'auto',
+    // flexGrow: 1,
+    // scrollBar
 };
 
 const addTaskButtonStyle = {
@@ -37,9 +39,12 @@ const addTaskButtonStyle = {
     height: '4rem',
     borderRadius: '5rem',
     border: 'none',
-    position: 'absolute',
+    position: 'sticky',
     bottom: '10%',
     right: '10%',
+    backgroundColor: 'orange',
+    // zIndex: 1000,
+    // color: 'rose'
 };
 
 /**
@@ -59,8 +64,9 @@ applyStyles(document.documentElement, { ...marginPaddingReset });
 
 let applicationTitle = applyStyles(createHtmlElements('h2', applicationTitleId, {}, { ...applicationTitleProperties }));
 parent.appendChild(applicationTitle);
-let layoutWrapper = applyStyles(createHtmlElements('div', 'layoutWrapper'), { ...layoutWrapperStyle });
+let layoutWrapper = applyStyles(createHtmlElements('div', 'layoutWrapper', { className: 'scrollableContainer' }), { ...layoutWrapperStyle });
 parent.appendChild(layoutWrapper);
+applyPseudoStyles(layoutWrapper, {'::-webkit-scrollbar': { display: 'none' }});
 
 
 let taskListItems = listTask();
@@ -103,8 +109,63 @@ function applyStyles (styleElement, styles = {}) {
     return styledElement;
 }
 
+function applyPseudoStyles (styleElement, pseudoStyles = {}) {
+    // console.log(styleElement, pseudoStyles, document.styleSheets);
+    const pseudoStyleList = Object.keys(pseudoStyles);
+    const sheet = document.styleSheets[0];
+    for (let i = 0; i < pseudoStyleList.length; i++) {
+        const pseudoElement = pseudoStyleList[i];
+        const pseudoElementStyle = pseudoStyles[pseudoElement];
+        const selector = styleElement.id ? `#${styleElement.id}` : `.${styleElement.className}`;
+        // console.log(pseudoElementStyle, cssRule);
+        let newPseudoStyleRule = `${selector}${pseudoElement} {`;
+        for (let property in pseudoElementStyle) {
+            newPseudoStyleRule += `${property}: ${pseudoElementStyle[property]};`;
+        }
+        newPseudoStyleRule += '}';
+        console.log(pseudoStyleList, pseudoStyles, styleElement, newPseudoStyleRule);
+        sheet.insertRule(newPseudoStyleRule, sheet.cssRules.length);
+    }
+}
+
 function listTask () {
     let taskList = [
+        { task: 'Sample Text 1' },
+        { task: 'Sample Text 2' },
+        { task: 'Sample Text 3' },
+        { task: 'Sample Text 4' },
+        { task: 'Sample Text 5' },
+        { task: 'Sample Text 6' },
+        { task: 'Sample Text 7' },
+        { task: 'Sample Text 8' },
+        { task: 'Sample Text 9' },
+        { task: 'Sample Text 10' },
+        { task: 'Sample Text 11' },
+        { task: 'Sample Text 12' },
+        { task: 'Sample Text 1' },
+        { task: 'Sample Text 2' },
+        { task: 'Sample Text 3' },
+        { task: 'Sample Text 4' },
+        { task: 'Sample Text 5' },
+        { task: 'Sample Text 6' },
+        { task: 'Sample Text 7' },
+        { task: 'Sample Text 8' },
+        { task: 'Sample Text 9' },
+        { task: 'Sample Text 10' },
+        { task: 'Sample Text 11' },
+        { task: 'Sample Text 12' },
+        { task: 'Sample Text 1' },
+        { task: 'Sample Text 2' },
+        { task: 'Sample Text 3' },
+        { task: 'Sample Text 4' },
+        { task: 'Sample Text 5' },
+        { task: 'Sample Text 6' },
+        { task: 'Sample Text 7' },
+        { task: 'Sample Text 8' },
+        { task: 'Sample Text 9' },
+        { task: 'Sample Text 10' },
+        { task: 'Sample Text 11' },
+        { task: 'Sample Text 12' },
         { task: 'Sample Text 1' },
         { task: 'Sample Text 2' },
         { task: 'Sample Text 3' },
@@ -121,18 +182,26 @@ function listTask () {
 
     const taskElementList = taskList.map((item, index) => {
         const taskWrapperDivStyle = {
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
+            margin: 0,
+            padding: '10px',
+            // display: 'flex',
+            // justifyContent: 'center',
+            // alignItems: 'center',
             width: '90%',
-            height: '8%',
-            backgroundColor: 'blue',
+            // height: '1000px',
+            backgroundColor: 'yellow',
             marginBottom: '0.5em',
-            borderRadius: '0.3em'
+            borderRadius: '0.3em',
         };
         let wrapperDiv = applyStyles(createHtmlElements('div', `item-${index}`), { ...taskWrapperDivStyle });
 
-        const textElementStyles = {};
+        const textElementStyles = {
+            // color: 'white',
+            textAlign: 'left',
+            width: '100%',
+            height: '100%',
+            paddingLeft: '5%',
+        };
         let textElement = applyStyles(createHtmlElements('span', `item-${index}-text`, {}, { textContent: item.task }), { ...textElementStyles });
         wrapperDiv.appendChild(textElement);
         return wrapperDiv;
