@@ -23,7 +23,13 @@ const layoutWrapperStyle = {
     width: '35vw',
     height: '80vh',
     borderRadius: '15px',
-    position: 'relative'
+    position: 'relative',
+    display: 'flex',
+    // justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingTop: '0.5em',
+    overflow: 'scroll'
 };
 
 const addTaskButtonStyle = {
@@ -101,14 +107,28 @@ function listTask () {
     let taskList = [
         { task: 'Sample Text 1' },
         { task: 'Sample Text 2' },
-        { task: 'Sample Text 3' }
+        { task: 'Sample Text 3' },
+        { task: 'Sample Text 4' },
+        { task: 'Sample Text 5' },
+        { task: 'Sample Text 6' },
+        { task: 'Sample Text 7' },
+        { task: 'Sample Text 8' },
+        { task: 'Sample Text 9' },
+        { task: 'Sample Text 10' },
+        { task: 'Sample Text 11' },
+        { task: 'Sample Text 12' }
     ];
 
     const taskElementList = taskList.map((item, index) => {
         const taskWrapperDivStyle = {
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
+            width: '90%',
+            height: '8%',
+            backgroundColor: 'blue',
+            marginBottom: '0.5em',
+            borderRadius: '0.3em'
         };
         let wrapperDiv = applyStyles(createHtmlElements('div', `item-${index}`), { ...taskWrapperDivStyle });
 
