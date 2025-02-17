@@ -2,6 +2,9 @@
  * Defining ID variables
  */
 const applicationTitleId = 'app-title';
+const applicationTitleContainerId = 'app-title-container';
+const applicationTitleTextId = 'app-title-text';
+const addTaskButtonId = 'add-task-button';
 
 /**
  * Defining style variables
@@ -30,21 +33,37 @@ const layoutWrapperStyle = {
     alignItems: 'center',
     padding: '25px 0',
     overflow: 'auto',
-    // flexGrow: 1,
-    // scrollBar
 };
 
 const addTaskButtonStyle = {
-    width: '4rem',
-    height: '4rem',
-    borderRadius: '5rem',
+    // width: '3rem',
+    // height: '3rem',
+    borderRadius: '10rem',
     border: 'none',
-    position: 'sticky',
-    bottom: '10%',
-    right: '10%',
+    position: 'absolute',
+    // bottom: '50px',
+    // top: '50px',
+    // left: '10px',
     backgroundColor: 'orange',
+    padding: '2em'
     // zIndex: 1000,
     // color: 'rose'
+};
+
+const addTitleContainerStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'orange',
+    width: '35vw'
+};
+
+const applicationTitleTextWrapperStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'green',
+    width: '35vw'
 };
 
 /**
@@ -62,17 +81,24 @@ applyStyles(parent, { ...parentStyle, flexDirection: 'column' });
 applyStyles(document.body, { ...parentStyle, ...marginPaddingReset });
 applyStyles(document.documentElement, { ...marginPaddingReset });
 
+let applicationTitleWrapper = applyStyles(createHtmlElements('div', applicationTitleContainerId), { ...addTitleContainerStyle });
+let applicationTitleTextWrapper = applyStyles(createHtmlElements('div', applicationTitleTextId), { ...applicationTitleTextWrapperStyle });
 let applicationTitle = applyStyles(createHtmlElements('h2', applicationTitleId, {}, { ...applicationTitleProperties }));
-parent.appendChild(applicationTitle);
+let addTaskButtonWrapper = applyStyles(createHtmlElements('div', addTaskButtonId), { ...applicationTitleTextWrapperStyle });
+let applicationAddButton = applyStyles(createHtmlElements('h2', applicationTitleId, {}, { ...applicationTitleProperties }));
+
+applicationTitleTextWrapper.appendChild(applicationTitle);
+applicationTitleWrapper.appendChild(applicationTitleTextWrapper);
+parent.appendChild(applicationTitleWrapper);
+
 let layoutWrapper = applyStyles(createHtmlElements('div', 'layoutWrapper', { className: 'scrollableContainer' }), { ...layoutWrapperStyle });
+
 parent.appendChild(layoutWrapper);
+
 applyPseudoStyles(layoutWrapper, {'::-webkit-scrollbar': { display: 'none' }});
 
-
 let taskListItems = listTask();
-console.log(taskListItems);
 for (let item of taskListItems) {
-    console.log(item);
     layoutWrapper.appendChild(item);
 }
 
