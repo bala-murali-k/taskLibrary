@@ -2,7 +2,7 @@
   "name": "tasklibrary",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://gitname.github.io/tasklibrary"
+  "homepage": "https://gitname.github.io/taskLibrary"
   "type": "module",
   "scripts": {
     "local": "vite",
